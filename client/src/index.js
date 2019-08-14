@@ -1,22 +1,45 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { createStore, applyMiddleware } from "redux";
-import { composeWithDevTools } from "redux-devtools-extension";
-import { Provider } from "react-redux";
+import { createStore, applyMiddleware } from 'redux';
+import { composeWithDevTools } from 'redux-devtools-extension';
+import { Provider } from 'react-redux';
 import App from './app';
-import RootReducer from "./reducers/root";
+import RootReducer from './reducers/root';
+import { Auth0Provider } from './auth0-wrapper';
+import config from './config//auth_config.json';
 import './index.css';
 import * as serviceWorker from './serviceWorker';
 
 const middleware = [];
-const store = createStore(RootReducer, composeWithDevTools(applyMiddleware(...middleware)));
+const store = createStore(
+  RootReducer,
+  composeWithDevTools(applyMiddleware(...middleware))
+);
 
+// A function that routes the user to the right place
+// after login
+const onRedirectCallback = appState => {
+  window.history.replaceState(
+    {},
+    document.title,
+    appState && appState.targetUrl
+      ? appState.targetUrl
+      : window.location.pathname
+  );
+};
 
 ReactDOM.render(
-    <Provider store={store}>
-        <App />
-    </Provider>,
-    document.getElementById('root')
+  <Provider store={store}>
+    <Auth0Provider
+      domain={config.domain}
+      client_id={config.clientId}
+      redirect_uri={window.location.origin}
+      onRedirectCallback={onRedirectCallback}
+    >
+      <App />
+    </Auth0Provider>
+  </Provider>,
+  document.getElementById('root')
 );
 
 // If you want your app to work offline and load faster, you can change

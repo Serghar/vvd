@@ -2,7 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Container from '@material-ui/core/Container';
 import UserDashboard from './components/user-dashboard';
-import Events from './components/events';
+import Nav from './components/nav';
 import PageNotFound from './components/page-not-found';
 
 
@@ -11,7 +11,7 @@ function App() {
     <Container>
       <Router>
         <Switch>
-          <Route path="/" exact component={Events} />
+          <Route path="/" exact component={Nav} />
           <Route path="/dashboard" component={UserDashboard} />
           <Route component={PageNotFound} />
         </Switch>
