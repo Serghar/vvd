@@ -1,10 +1,9 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Container from '@material-ui/core/Container';
 import UserDashboard from './components/user-dashboard';
 import Nav from './components/nav';
 import PageNotFound from './components/page-not-found';
-
 
 function App() {
   return (

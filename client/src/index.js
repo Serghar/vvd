@@ -1,20 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { createStore, applyMiddleware } from 'redux';
-import { composeWithDevTools } from 'redux-devtools-extension';
-import { Provider } from 'react-redux';
 import App from './app';
-import RootReducer from './reducers/root';
 import { Auth0Provider } from './auth0-wrapper';
 import config from './config//auth_config.json';
 import './index.css';
 import * as serviceWorker from './serviceWorker';
-
-const middleware = [];
-const store = createStore(
-  RootReducer,
-  composeWithDevTools(applyMiddleware(...middleware))
-);
 
 // A function that routes the user to the right place
 // after login
@@ -29,16 +19,14 @@ const onRedirectCallback = appState => {
 };
 
 ReactDOM.render(
-  <Provider store={store}>
-    <Auth0Provider
-      domain={config.domain}
-      client_id={config.clientId}
-      redirect_uri={window.location.origin}
-      onRedirectCallback={onRedirectCallback}
-    >
-      <App />
-    </Auth0Provider>
-  </Provider>,
+  <Auth0Provider
+    domain={config.domain}
+    client_id={config.clientId}
+    redirect_uri={window.location.origin}
+    onRedirectCallback={onRedirectCallback}
+  >
+    <App />
+  </Auth0Provider>,
   document.getElementById('root')
 );
 
